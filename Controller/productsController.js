@@ -1,5 +1,7 @@
 const productsService = require("../Service/productsService");
 const productScheme = require("./productValidation");
+const Product = require("../models/schemas/productSchema");
+const ProductData = require("../productData.json");
 
 module.exports = {
   getProducts: async (req, res) => {
@@ -55,5 +57,12 @@ module.exports = {
     } catch (error) {
       res.send(error);
     }
+  },
+  bulkProductData: async (req, res) => {
+    const Products = await Product.bulkCreate(ProductData);
+    res.status(201).json({
+      success: true,
+      Products,
+    });
   },
 };

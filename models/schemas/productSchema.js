@@ -1,26 +1,3 @@
-// const { DataTypes } = require("sequelize");
-// const sequelize = require("../../common/dbconnection");
-// const product = sequelize.define(
-//   "product",
-//   {
-//     id: { primaryKey: true, autoIncrement: true, type: DataTypes.INTEGER },
-//     name: {
-//       allowNull: false,
-//       type: DataTypes.STRING,
-//       unique: true,
-//     },
-//     price: {
-//       allowNull: false,
-//       type: DataTypes.NUMBER,
-//     },
-//   },
-//   {
-//     timestamps: true,
-//     paranoid: true,
-//   }
-// );
-// module.exports = product;
-
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../common/dbconnection");
 

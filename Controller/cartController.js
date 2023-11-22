@@ -2,9 +2,6 @@ const cartService = require("../Service/cartService");
 const cartValidation = require("../Controller/cartValidation");
 
 const cartController = {
-  // getCart: async (req, res, next) => {
-  //   res.send(await cartService.getCart());
-  // },
   getCart: async (req, res, next) => {
     try {
       const userCart = await cartService.getCart(productID, cartID);
@@ -17,14 +14,18 @@ const cartController = {
 
   addToCart: async (req, res) => {
     try {
-      const { error, value } = cartValidation.addToCart.validate(req.body, {
-        abortEarly: false,
-      });
+      const { error, value } = cartValidation.addToCart.validate(
+        { id: req.params.product_id, ...req.body },
+        {
+          abortEarly: false,
+        }
+      );
       if (error) {
         return res.send(error.details.map((err) => err.message));
       } else {
-        const { productId, cartId } = value;
-        const newlyAdded = await cartService.addToCart(productId, cartId);
+        const product_id = Number(req.params.product_id);
+        const { user_id } = value;
+        const newlyAdded = await cartService.addToCart(product_id, user_id);
         return res.send(newlyAdded);
       }
     } catch (error) {
@@ -59,22 +60,6 @@ const cartController = {
         const cartId = req.params.id;
         const deleted = await cartService.deleteCart(cartId, value);
         res.send(deleted);
-      }
-    } catch (error) {
-      res.send(error);
-    }
-  },
-  addToCartController: async (req, res, next) => {
-    try {
-      const { error, value } = cartValidation.addToCart.validate(req.body, {
-        abortEarly: false,
-      });
-      if (error) {
-        return res.send(error.details.map((err) => err.message));
-      } else {
-        const { productID, cartID } = value;
-        const newlyAdded = await cartService.addToCart(productID, cartID);
-        return res.send(newlyAdded);
       }
     } catch (error) {
       res.send(error);
